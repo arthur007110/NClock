@@ -9,12 +9,12 @@ type TaskItemProps = {
 export default function TaskItem(props: TaskItemProps) {
   const{ handleClick, task } = props;
 
-  function openInInspector() {
+  function select() {
     handleClick(task);
   }
 
   return (
-    <Item onClick={openInInspector}>
+    <Item onClick={select}>
       {task.title}
     </Item>
   );
