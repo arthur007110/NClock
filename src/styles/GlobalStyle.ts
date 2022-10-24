@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Azeret+Mono');  
+
   * {
     margin: 0;
     padding: 0;
@@ -18,7 +20,7 @@ export const GlobalStyle = createGlobalStyle`
     --light-background: #222238;
     --primary: #493C6E;
     --dark-primary: #2D2238;
-    --secondary: #6E6831;
+    --secondary: #556E31;
     --font-color: #E1E1E6;
   }
 `
