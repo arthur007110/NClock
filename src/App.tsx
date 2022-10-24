@@ -1,5 +1,4 @@
 import { GlobalStyle } from './styles/GlobalStyle'
-// import { Greetings } from './components/Greetings'
 import { TasksBar } from './components/TasksBar'
 import Inspector from './components/Inspector'
 import { MainApp, MainView } from './styles/appStyles'
@@ -14,7 +13,6 @@ export function App() {
         <Inspector />
       </MainView>
       <GlobalStyle />
-      {/* <Greetings /> */}
     </MainApp>
   )
 }
