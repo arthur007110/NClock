@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "../Button";
 import Input from "../Input";
-import { Task } from "../TasksBar";
 import PeriodItem from "./PeriodItem/PeriodItem";
 import { ClockTimer, ClockView, ButtonsContainer, MainView, PeriodsContainer } from "./styles";
 

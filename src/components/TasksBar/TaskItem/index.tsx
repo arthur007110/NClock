@@ -1,4 +1,3 @@
-import { Task } from "..";
 import { Item } from "./styles";
 
 type TaskItemProps = {

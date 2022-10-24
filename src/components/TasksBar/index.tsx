@@ -1,16 +1,11 @@
 import { SideBar } from "./styles";
 import TaskItem from "./TaskItem";
 
-export type Task = {
-  title: string;
-}
-
 type TaskBarProps = {
   // tasks: Task[];
   focusTask: (task: Task) => void;
 }
 
-// TODO: set Task type in global types file
 // TODO: move tasks to global state
 const tasks: Task[] = [
   { title: 'Tarefa 01' },
