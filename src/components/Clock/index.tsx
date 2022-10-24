@@ -9,12 +9,6 @@ type ClockProps = {
   selectedTask: Task | null;
 }
 
-// TODO: move Period type to global types file
-export type Period = {
-  start: Date;
-  end: Date;
-}
-
 const msInSecond = 1000;
 const msInMinute = 60 * msInSecond;
 const msInHour = 60 * msInMinute;
