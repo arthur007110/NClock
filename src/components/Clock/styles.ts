@@ -9,6 +9,7 @@ export const ClockTimer = styled.div`
 `
 
 export const ClockView = styled.div`
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -21,4 +22,18 @@ export const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+`
+
+export const MainView = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+`
+
+export const PeriodsContainer = styled.div`
+  overflow: scroll;
+  width: 300px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `
