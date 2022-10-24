@@ -18,6 +18,11 @@ export const Container = styled.button`
 
   cursor: pointer;
 
+  &:focus {
+    outline: none;
+    border: 1px solid var(--secondary);
+  }
+
   &:hover {
     filter: brightness(0.9);
   }
