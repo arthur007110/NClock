@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import { Button } from "../Button";
 import Input from "../Input";
+import { Task } from "../TasksBar";
 import { ClockTimer, ClockView, ButtonsContainer } from "./styles";
 
-export default function Clock () {
+// TODO: set Task type in global types file
+type ClockProps = {
+  selectedTask: Task | null;
+}
+
+export default function Clock (props: ClockProps) {
+  const { selectedTask } = props;
+
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   const [isRunning, setIsRunning] = useState(false);
 
@@ -28,7 +36,7 @@ export default function Clock () {
 
   return (
     <ClockView>
-      <Input placeholder="Task name" disabled={true}></Input>
+      <Input placeholder={selectedTask ? selectedTask.title : ''} disabled={true}></Input>
       <ClockTimer>
         <h1>{time}</h1>
       </ClockTimer>

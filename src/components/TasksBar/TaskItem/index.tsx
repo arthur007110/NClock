@@ -1,17 +1,21 @@
+import { Task } from "..";
 import { Item } from "./styles";
 
 type TaskItemProps = {
-  title: string;
+  task: Task;
+  handleClick: (task: Task) => void;
 }
 
-export default function TaskItem({ title }: TaskItemProps) {
+export default function TaskItem(props: TaskItemProps) {
+  const{ handleClick, task } = props;
+
   function openInInspector() {
-    window.Main.sendMessage(title);
+    handleClick(task);
   }
 
   return (
     <Item onClick={openInInspector}>
-      {title}
+      {task.title}
     </Item>
   );
 }
