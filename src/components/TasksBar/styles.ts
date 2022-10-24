@@ -5,9 +5,10 @@ export const SideBar = styled.div`
   height: 100vh;
   width: 300px;
   opacity:1;
-  positon: absolute;
+  position: relative;
   visibility: visible;
   transition: all 0.25s ease;
+  border-right: 1px solid var(--background);
 
   ul {
     padding: 0;
