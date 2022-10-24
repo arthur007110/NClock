@@ -8,13 +8,13 @@ export const Container = styled.button`
   align-items: center;
   justify-content: center;
 
-  background: #8257e6;
-  border-radius: 8px;
+  background: var(--primary);
+  border-radius: 5px;
   border: 0;
 
-  color: #FFF;
+  color: var(--font-color);
   font-size: 16px;
-  font-weight: bold;
+  font-weight: lighter;
 
   cursor: pointer;
 
