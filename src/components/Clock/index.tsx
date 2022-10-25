@@ -7,6 +7,7 @@ import { ClockTimer, ClockView, ButtonsContainer, MainView, PeriodsContainer } f
 // TODO: set Task type in global types file
 type ClockProps = {
   selectedTask: Task | null;
+  updateTask: (task: Task) => void;
 }
 
 const msInSecond = 1000;
@@ -14,7 +15,7 @@ const msInMinute = 60 * msInSecond;
 const msInHour = 60 * msInMinute;
 
 export default function Clock (props: ClockProps) {
-  const { selectedTask } = props;
+  const { selectedTask, updateTask } = props;
 
   const [periods, setPeriods] = useState<Period[]>([]);
   const [startTime, setStartTime] = useState<Date>();
@@ -24,6 +25,14 @@ export default function Clock (props: ClockProps) {
   useEffect(() => {
     setPeriods(selectedTask?.periods || []);
   }, [selectedTask]);
+
+  useEffect(() => {
+    if(!selectedTask) return;
+    updateTask({
+      ...selectedTask,
+      periods,
+    });
+  }, [periods]);
 
   function stopTimer() {
     // TODO: stop timer at backend
@@ -35,6 +44,7 @@ export default function Clock (props: ClockProps) {
         end: new Date(),
       }
     ]);
+
     setStartTime(undefined);
     setCurrentTime(0);
     setIsRunning(false);
@@ -46,7 +56,6 @@ export default function Clock (props: ClockProps) {
     setIsRunning(true);
   }
 
-  // recive time in milliseconds and return a string with format HH:MM:SS
   function formatTime(time: number) {
     const hours = Math.floor(time / msInHour);
     const minutes = Math.floor((time % msInHour) / msInMinute);
@@ -89,6 +98,5 @@ export default function Clock (props: ClockProps) {
         })}
       </PeriodsContainer>
     </MainView>
-    
   );
 }

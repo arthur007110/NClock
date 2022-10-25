@@ -7,6 +7,7 @@ declare global {
     end: Date;
   }
   interface Task {
+    id: string;
     title: string;
     periods?: Period[];
   }
