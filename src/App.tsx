@@ -8,7 +8,7 @@ import { useState } from 'react'
 export function App() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
   const [tasks, setTasks] = useState<Task[]>([
-    { title: 'Tarefa 01' },
+    { title: 'Tarefa 01', periods: [{start: new Date(), end: new Date()}] },
     { title: 'Reunião com RH' },
     { title: 'Ajudando Fulano' },
     { title: 'Desenvolvendo NClock' },

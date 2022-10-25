@@ -21,6 +21,10 @@ export default function Clock (props: ClockProps) {
   const [currentTime, setCurrentTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
+  useEffect(() => {
+    setPeriods(selectedTask?.periods || []);
+  }, [selectedTask]);
+
   function stopTimer() {
     // TODO: stop timer at backend
     if(!startTime) return;
@@ -42,10 +46,6 @@ export default function Clock (props: ClockProps) {
     setIsRunning(true);
   }
 
-  useEffect(() => {
-    console.log('periods', periods);
-  }, [periods]);
-
   // recive time in milliseconds and return a string with format HH:MM:SS
   function formatTime(time: number) {
     const hours = Math.floor(time / msInHour);
@@ -60,7 +60,6 @@ export default function Clock (props: ClockProps) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("tick", isRunning);
       if(!isRunning || !startTime) return;
       setCurrentTime(new Date().getTime() - startTime.getTime());
     }, 1000);
