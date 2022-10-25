@@ -52,6 +52,8 @@ export default function Clock (props: ClockProps) {
 
   function startTimer() {
     // TODO: start timer at backend
+    // TODO: show error if has no task selected
+    if(!selectedTask) return;
     setStartTime(new Date());
     setIsRunning(true);
   }
@@ -78,11 +80,13 @@ export default function Clock (props: ClockProps) {
   return (
     <MainView>
       <ClockView>
+        {/* // TODO: replace ternal operator */}
         <Input placeholder={selectedTask ? selectedTask.title : ''} disabled={true}></Input>
         <ClockTimer>
           <h1>{formatTime(currentTime)}</h1>
         </ClockTimer>
         <ButtonsContainer>
+          {/* // TODO: replace ternal operator */}
           {isRunning ? <Button onClick={stopTimer}>Stop</Button> : <Button onClick={startTimer}>Start</Button>}
           <Button>Start a pause</Button>
         </ButtonsContainer>
@@ -96,6 +100,7 @@ export default function Clock (props: ClockProps) {
             </div>
           );
         })}
+        {isRunning && <PeriodItem period={{ start: startTime || new Date(), end: new Date() }} running={true}></PeriodItem>}
       </PeriodsContainer>
     </MainView>
   );
