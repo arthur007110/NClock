@@ -13,7 +13,6 @@ export default function Inspector() {
           <Button>Create and start</Button>
         </ButtonsContainer>
       </CreateTaskContainer>
-      
     </InspectorPanel>
   );
 }

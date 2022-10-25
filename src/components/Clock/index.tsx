@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../Button";
 import Input from "../Input";
 import PeriodItem from "./PeriodItem/PeriodItem";
-import { ClockTimer, ClockView, ButtonsContainer, MainView, PeriodsContainer } from "./styles";
+import { ClockTimer, ClockView, ButtonsContainer, MainView, PeriodsContainer, Title } from "./styles";
 
 // TODO: set Task type in global types file
 type ClockProps = {
@@ -92,11 +92,12 @@ export default function Clock (props: ClockProps) {
         </ButtonsContainer>
       </ClockView>
       <PeriodsContainer>
-        <h1>Periods</h1>
+        <Title>Periods</Title>
         {periods.map((period, index) => {
           return (
             <div key={index}>
-              <PeriodItem period={period}></PeriodItem>
+              {index === 0 && <PeriodItem period={period} first={true}></PeriodItem>}
+              {index !== 0 && <PeriodItem period={period}></PeriodItem>}
             </div>
           );
         })}

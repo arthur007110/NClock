@@ -3,6 +3,7 @@ import { Badge, Item, RunningBadge } from "./styles";
 type PeriodItemProps = {
   period: Period;
   running?: boolean;
+  first?: boolean;
 }
 
 const msInSecond = 1000;
@@ -10,7 +11,7 @@ const msInMinute = 60 * msInSecond;
 const msInHour = 60 * msInMinute;
 
 export default function PeriodItem(props: PeriodItemProps) {
-  const { period, running } = props;
+  const { period, running, first } = props;
   const { start, end } = period;
 
   // recive time in milliseconds and return a string with format 00h00m00s
@@ -23,7 +24,7 @@ export default function PeriodItem(props: PeriodItemProps) {
   }
 
   return (
-    <Item>
+    <Item style={first ? {marginTop: '3rem'} : {}}>
       {start.toLocaleTimeString()} - {end.toLocaleTimeString()}
       {running && <RunningBadge>Running</RunningBadge>}
       {!running && <Badge>{formatTime(end.getTime() - start.getTime())}</Badge>}
