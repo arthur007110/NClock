@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const SideBar = styled.div`
   background: var(--light-background);
   height: 100vh;
-  width: 300px;
+  width: 250px;
   opacity:1;
   position: relative;
   visibility: visible;

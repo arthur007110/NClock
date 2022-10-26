@@ -9,12 +9,13 @@ export const ClockTimer = styled.div`
 `
 
 export const ClockView = styled.div`
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  margin: auto;
+  padding: 0 1rem;
 `
 
 export const ButtonsContainer = styled.div`
@@ -36,7 +37,7 @@ export const MainView = styled.div`
 export const PeriodsContainer = styled.div`
   background-color: var(--light-background);
   overflow-y: scroll;
-  width: 300px;
+  width: 250px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -64,5 +65,4 @@ export const Title = styled.h2`
   background-color: var(--light-background);
   padding: 0.4rem;
   margin: 0.2rem;
-  margin-bottom: 10rem;
 `
