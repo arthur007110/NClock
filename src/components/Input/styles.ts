@@ -16,5 +16,9 @@ export const InputComponent = styled.div`
       outline: none;
       border: 1px solid var(--secondary);
     }
+
+    ${({ color }) => color === 'bolder' && `
+      font-weight: bold;
+    `}
   }
 `

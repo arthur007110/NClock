@@ -30,4 +30,8 @@ export const Container = styled.button`
   &:active {
     filter: brightness(0.7);
   }
+
+  ${({ color }) => color === 'secondary' && `
+    background-color: var(--secondary);
+  `}
 `

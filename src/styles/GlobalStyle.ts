@@ -20,7 +20,8 @@ export const GlobalStyle = createGlobalStyle`
     --light-background: #222238;
     --primary: #493C6E;
     --dark-primary: #2D2238;
-    --secondary: #556E31;
+    --secondary: #576E37;
+    --dark-secondary: #415426;
     --font-color: #E1E1E6;
   }
 `

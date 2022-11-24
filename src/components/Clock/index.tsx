@@ -16,48 +16,89 @@ const msInHour = 60 * msInMinute;
 
 export default function Clock (props: ClockProps) {
   const { selectedTask, updateTask } = props;
-
   const [periods, setPeriods] = useState<Period[]>([]);
-  const [startTime, setStartTime] = useState<Date>();
-  const [currentTime, setCurrentTime] = useState(0);
+
   const [isRunning, setIsRunning] = useState(false);
+  const [runningTask, setRunningTask] = useState<Task | null>(null);
+  const [currentPeriod, setCurrentPeriod] = useState<Period>();
+  const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
     setPeriods(selectedTask?.periods || []);
   }, [selectedTask]);
 
   useEffect(() => {
-    if(!selectedTask) return;
+    if(!runningTask) return;
+    // console.log('runningTask snapshot', runningTask);
     updateTask({
-      ...selectedTask,
-      periods,
+      ...runningTask,
     });
+
+    if(runningTask.id === selectedTask?.id) {
+
+      setPeriods(
+        (runningTask.periods ?? []).filter(period => period.finished) 
+      );
+    }
+  }, [runningTask]);
+
+  useEffect(() => {
+    console.log('periods', periods);
   }, [periods]);
 
-  function stopTimer() {
-    // TODO: stop timer at backend
-    if(!startTime) return;
-    setPeriods([
-      ...periods,
-      {
-        start: startTime,
-        end: new Date(),
-      }
-    ]);
+  useEffect(() => {
+    if(!currentPeriod || !runningTask) return;
+  
+    const runningTaskPeriods = runningTask.periods ? runningTask.periods : [];
+    // console.log('periods before', runningTaskPeriods);
+    const newPeriods = runningTaskPeriods.map(period => {
+      if(currentPeriod.finished && !period.finished) return currentPeriod;
+      return period;
+    });
+    if(isRunning) newPeriods.push(currentPeriod);
+    // console.log('periods after', newPeriods);
 
-    setStartTime(undefined);
+    setRunningTask({
+      ...runningTask,
+      periods: newPeriods,
+    });
+  }, [currentPeriod]);
+
+  function stopTimer() {
+    // TODO: update tasks at backend
+    if(!currentPeriod || !runningTask) return;
+
+    setCurrentPeriod({
+      ...currentPeriod,
+      end: new Date(),
+      finished: true,
+    });
+
     setCurrentTime(0);
     setIsRunning(false);
   }
 
   function startTimer() {
-    // TODO: start timer at backend
+    // TODO: update tasks at backend
     // TODO: show error if has no task selected
     if(!selectedTask) return;
-    setStartTime(new Date());
+    setCurrentPeriod({
+      start: new Date(),
+      finished: false,
+    });
+    console.log('selectedTask', selectedTask);
+    setRunningTask(selectedTask);
     setIsRunning(true);
   }
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if(!isRunning || !currentPeriod) return;
+      setCurrentTime(new Date().getTime() - currentPeriod.start.getTime());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isRunning]);
+  
   function formatTime(time: number) {
     const hours = Math.floor(time / msInHour);
     const minutes = Math.floor((time % msInHour) / msInMinute);
@@ -69,31 +110,36 @@ export default function Clock (props: ClockProps) {
     return `${hoursString}:${minutesString}:${secondsString}`;
   }
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if(!isRunning || !startTime) return;
-      setCurrentTime(new Date().getTime() - startTime.getTime());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [isRunning]);
+  function getRunningPeriod() {
+    return {
+      start: currentPeriod?.start || new Date(),
+      end: new Date(),
+      finished: false
+    };
+  }
+
+  function getFinishedPeriods(){
+    return periods.filter(period => period.finished);
+  }
 
   return (
     <MainView>
       <ClockView>
         {/* // TODO: replace ternal operator */}
-        <Input placeholder={selectedTask ? selectedTask.title : ''} disabled={true}></Input>
+        <Input placeholder={selectedTask ? `Selected Task<${selectedTask.title}>` : 'Selected Task'} bolder={true} disabled={true}></Input>
+        <Input placeholder={runningTask ? `Running Task<${runningTask.title}>` : 'Running Task'} bolder={true} disabled={true}></Input>
         <ClockTimer>
           <h1>{formatTime(currentTime)}</h1>
         </ClockTimer>
         <ButtonsContainer>
           {/* // TODO: replace ternal operator */}
           {isRunning ? <Button onClick={stopTimer}>Stop</Button> : <Button onClick={startTimer}>Start</Button>}
-          <Button>Start a pause</Button>
+          <Button color='secondary'>Start a pause</Button>
         </ButtonsContainer>
       </ClockView>
       <PeriodsContainer>
         <Title>Periods</Title>
-        {periods.map((period, index) => {
+        {getFinishedPeriods().map((period, index) => {
           return (
             <div key={index}>
               {index === 0 && <PeriodItem period={period} first={true}></PeriodItem>}
@@ -101,7 +147,13 @@ export default function Clock (props: ClockProps) {
             </div>
           );
         })}
-        {isRunning && <PeriodItem period={{ start: startTime || new Date(), end: new Date() }} running={true}></PeriodItem>}
+        {isRunning && selectedTask?.id === runningTask?.id &&
+          <PeriodItem
+            first={getFinishedPeriods().length === 0}
+            period={getRunningPeriod()}
+            running={true}
+          ></PeriodItem>
+        }
       </PeriodsContainer>
     </MainView>
   );

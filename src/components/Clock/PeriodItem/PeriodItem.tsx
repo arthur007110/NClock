@@ -25,9 +25,9 @@ export default function PeriodItem(props: PeriodItemProps) {
 
   return (
     <Item style={first ? {marginTop: '3rem'} : {}}>
-      {start.toLocaleTimeString()} - {end.toLocaleTimeString()}
+      {start.toLocaleTimeString()} - {end ? end.toLocaleTimeString() : new Date().toLocaleTimeString()}
       {running && <RunningBadge>Running</RunningBadge>}
-      {!running && <Badge>{formatTime(end.getTime() - start.getTime())}</Badge>}
+      {!running && end && <Badge>{formatTime(end.getTime() - start.getTime())}</Badge>}
     </Item>
   );
 }
